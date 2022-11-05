@@ -1,2 +1,3 @@
-# twitter-brand
-Project for analyzing brands with Twitter data
+# Understanding brands with Twitter data
+
+Project for analyzing brands with Twitter data.
