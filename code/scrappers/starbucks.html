@@ -1,0 +1,848 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Scrapper for Starbucks &#8212; Understanding Brands</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Supporting functions" href="helpers.html" />
+    <link rel="prev" title="Topic Modeling: BERTopic" href="../../docs/topic_modelling/bertopic.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Understanding Brands</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Social Media Analytics
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../docs/eda/eda.html">
+   Exploratory Data Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../docs/eda/preprocess.html">
+   Data Preprocessing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../docs/topic_modelling/lda.html">
+   Topic Modeling: Latent Dirichlet Allocation (LDA)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../docs/topic_modelling/bertopic.html">
+   Topic Modeling: BERTopic
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Scrapper for Starbucks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="helpers.html">
+   Supporting functions
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/patilpushkarp/twitter-brand/master?urlpath=tree/docs/code/scrappers/starbucks.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/patilpushkarp/twitter-brand"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/patilpushkarp/twitter-brand/issues/new?title=Issue%20on%20page%20%2Fcode/scrappers/starbucks.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/code/scrappers/starbucks.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#scraping">
+   Scraping
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#combining-scrapped-data">
+   Combining Scrapped Data
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Scrapper for Starbucks</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#scraping">
+   Scraping
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#combining-scrapped-data">
+   Combining Scrapped Data
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="scrapper-for-starbucks">
+<h1>Scrapper for Starbucks<a class="headerlink" href="#scrapper-for-starbucks" title="Permalink to this headline">#</a></h1>
+<section id="scraping">
+<h2>Scraping<a class="headerlink" href="#scraping" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Import necessary packages
+import traceback
+import snscrape.modules.twitter as sntwitter
+import pandas as pd
+from datetime import datetime, timedelta
+from multiprocessing import Pool
+from functools import partial
+
+from helpers import scrape
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Declare start date and end date (today&#39;s date)
+start_date = datetime(2022,9,1)
+today = datetime.today()
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Create a list of dates to be looped
+dates = []
+date = start_date
+while today &gt; date:
+    dates.append(str(date).split(&quot; &quot;)[0])
+    date += timedelta(days=1)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Scrape data
+with Pool(6) as p:
+    p.map(partial(scrape, dates=dates), range(len(dates)-1))
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Running query: &#39;starbucks since:2022-09-10 until:2022-09-11&#39;
+Running query: &#39;starbucks since:2022-09-16 until:2022-09-17&#39;
+Running query: &#39;starbucks since:2022-09-01 until:2022-09-02&#39;
+Running query: &#39;starbucks since:2022-09-07 until:2022-09-08&#39;
+Running query: &#39;starbucks since:2022-09-13 until:2022-09-14&#39;
+Running query: &#39;starbucks since:2022-09-04 until:2022-09-05&#39;
+Tweets scrapped: 9684
+
+
+Running query: &#39;starbucks since:2022-09-05 until:2022-09-06&#39;
+Tweets scrapped: 10398
+
+
+Running query: &#39;starbucks since:2022-09-08 until:2022-09-09&#39;
+Tweets scrapped: 11819
+
+
+Running query: &#39;starbucks since:2022-09-17 until:2022-09-18&#39;
+Tweets scrapped: 12848
+
+
+Running query: &#39;starbucks since:2022-09-11 until:2022-09-12&#39;
+Tweets scrapped: 15247
+
+
+Running query: &#39;starbucks since:2022-09-02 until:2022-09-03&#39;
+Tweets scrapped: 17095
+
+
+Running query: &#39;starbucks since:2022-09-14 until:2022-09-15&#39;
+Tweets scrapped: 10066
+
+
+Running query: &#39;starbucks since:2022-09-06 until:2022-09-07&#39;
+Tweets scrapped: 10445
+
+
+Running query: &#39;starbucks since:2022-09-18 until:2022-09-19&#39;
+Tweets scrapped: 10668
+
+
+Running query: &#39;starbucks since:2022-09-12 until:2022-09-13&#39;
+Tweets scrapped: 9824
+
+
+Running query: &#39;starbucks since:2022-09-19 until:2022-09-20&#39;
+Tweets scrapped: 10109
+
+
+Running query: &#39;starbucks since:2022-09-22 until:2022-09-23&#39;
+Tweets scrapped: 18669
+
+
+Running query: &#39;starbucks since:2022-09-03 until:2022-09-04&#39;
+Tweets scrapped: 15327
+
+
+Running query: &#39;starbucks since:2022-09-15 until:2022-09-16&#39;
+Tweets scrapped: 19009
+
+
+Running query: &#39;starbucks since:2022-09-09 until:2022-09-10&#39;
+Tweets scrapped: 10927
+
+
+Running query: &#39;starbucks since:2022-09-20 until:2022-09-21&#39;
+Tweets scrapped: 17494
+
+
+Running query: &#39;starbucks since:2022-09-25 until:2022-09-26&#39;
+Tweets scrapped: 11886
+
+
+Running query: &#39;starbucks since:2022-09-23 until:2022-09-24&#39;
+Tweets scrapped: 12463
+
+
+Running query: &#39;starbucks since:2022-09-28 until:2022-09-29&#39;
+Tweets scrapped: 12445
+
+
+Running query: &#39;starbucks since:2022-10-01 until:2022-10-02&#39;
+Tweets scrapped: 13544
+
+
+Running query: &#39;starbucks since:2022-10-04 until:2022-10-05&#39;
+Tweets scrapped: 9551
+
+
+Running query: &#39;starbucks since:2022-09-26 until:2022-09-27&#39;
+Tweets scrapped: 11505
+
+
+Running query: &#39;starbucks since:2022-09-21 until:2022-09-22&#39;
+Tweets scrapped: 11349
+
+
+Running query: &#39;starbucks since:2022-09-24 until:2022-09-25&#39;
+Tweets scrapped: 10727
+
+
+Running query: &#39;starbucks since:2022-10-02 until:2022-10-03&#39;
+Tweets scrapped: 12739
+
+
+Running query: &#39;starbucks since:2022-09-29 until:2022-09-30&#39;
+Tweets scrapped: 11749
+
+
+Running query: &#39;starbucks since:2022-10-05 until:2022-10-06&#39;
+Tweets scrapped: 10189
+
+
+Running query: &#39;starbucks since:2022-09-27 until:2022-09-28&#39;
+Tweets scrapped: 11643
+
+
+Running query: &#39;starbucks since:2022-10-07 until:2022-10-08&#39;
+Tweets scrapped: 9990
+
+
+Running query: &#39;starbucks since:2022-10-10 until:2022-10-11&#39;
+Tweets scrapped: 11223
+
+
+Running query: &#39;starbucks since:2022-10-03 until:2022-10-04&#39;
+Tweets scrapped: 12340
+
+
+Running query: &#39;starbucks since:2022-09-30 until:2022-10-01&#39;
+Tweets scrapped: 10503
+
+
+Running query: &#39;starbucks since:2022-10-13 until:2022-10-14&#39;
+Tweets scrapped: 8607
+
+
+Running query: &#39;starbucks since:2022-10-11 until:2022-10-12&#39;
+Tweets scrapped: 13045
+
+
+Running query: &#39;starbucks since:2022-10-06 until:2022-10-07&#39;
+Tweets scrapped: 12918
+
+
+Running query: &#39;starbucks since:2022-10-08 until:2022-10-09&#39;
+Tweets scrapped: 12470
+
+
+Running query: &#39;starbucks since:2022-10-16 until:2022-10-17&#39;
+Tweets scrapped: 10999
+
+
+Running query: &#39;starbucks since:2022-10-14 until:2022-10-15&#39;
+Tweets scrapped: 9522
+
+
+Running query: &#39;starbucks since:2022-10-12 until:2022-10-13&#39;
+Tweets scrapped: 13654
+
+
+Running query: &#39;starbucks since:2022-10-19 until:2022-10-20&#39;
+Tweets scrapped: 9152
+
+
+Running query: &#39;starbucks since:2022-10-09 until:2022-10-10&#39;
+Tweets scrapped: 12615
+
+
+Running query: &#39;starbucks since:2022-10-22 until:2022-10-23&#39;
+Tweets scrapped: 8612
+
+
+Running query: &#39;starbucks since:2022-10-17 until:2022-10-18&#39;
+Tweets scrapped: 9925
+
+
+Running query: &#39;starbucks since:2022-10-15 until:2022-10-16&#39;
+Tweets scrapped: 8486
+
+
+Running query: &#39;starbucks since:2022-10-25 until:2022-10-26&#39;
+Tweets scrapped: 12427
+
+
+Running query: &#39;starbucks since:2022-10-28 until:2022-10-29&#39;
+Tweets scrapped: 8590
+
+
+Running query: &#39;starbucks since:2022-10-23 until:2022-10-24&#39;
+Tweets scrapped: 12336
+
+
+Running query: &#39;starbucks since:2022-10-20 until:2022-10-21&#39;
+Tweets scrapped: 8415
+
+
+Running query: &#39;starbucks since:2022-10-31 until:2022-11-01&#39;
+Tweets scrapped: 9859
+
+
+Running query: &#39;starbucks since:2022-10-18 until:2022-10-19&#39;
+Tweets scrapped: 8379
+
+
+Running query: &#39;starbucks since:2022-10-29 until:2022-10-30&#39;
+Tweets scrapped: 7870
+
+
+Running query: &#39;starbucks since:2022-10-24 until:2022-10-25&#39;
+Tweets scrapped: 10593
+
+
+Running query: &#39;starbucks since:2022-10-26 until:2022-10-27&#39;
+Tweets scrapped: 10694
+
+
+Running query: &#39;starbucks since:2022-10-21 until:2022-10-22&#39;
+Tweets scrapped: 8991
+
+
+Running query: &#39;starbucks since:2022-11-01 until:2022-11-02&#39;
+Tweets scrapped: 11395
+
+
+Running query: &#39;starbucks since:2022-11-03 until:2022-11-04&#39;
+Tweets scrapped: 7454
+
+
+Running query: &#39;starbucks since:2022-10-30 until:2022-10-31&#39;
+Tweets scrapped: 9331
+
+
+Tweets scrapped: 11314
+
+
+Running query: &#39;starbucks since:2022-10-27 until:2022-10-28&#39;
+Tweets scrapped: 10259
+
+
+Tweets scrapped: 10096
+
+
+Running query: &#39;starbucks since:2022-11-02 until:2022-11-03&#39;
+Tweets scrapped: 8214
+
+
+Tweets scrapped: 10358
+
+
+Tweets scrapped: 22728
+
+
+Running query: &#39;starbucks since:2022-11-04 until:2022-11-05&#39;
+Tweets scrapped: 20703
+
+
+Tweets scrapped: 15421
+
+
+Running query: &#39;starbucks since:2022-11-05 until:2022-11-06&#39;
+Tweets scrapped: 10510
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="combining-scrapped-data">
+<h2>Combining Scrapped Data<a class="headerlink" href="#combining-scrapped-data" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+import os
+import glob
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Get all the csv files in the folder
+path = &#39;./../data/starbucks/&#39;
+csv_files = glob.glob(os.path.join(path, &quot;*.csv&quot;))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Combine the data by iteratively loading files
+files = []
+for f in csv_files:
+    files.append(pd.read_csv(f, engine=&#39;python&#39;))
+
+final = pd.concat(files, axis=0, ignore_index=True)
+    
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>final.to_hdf(&#39;./../data/starbucks/data.h5&#39;, key=&#39;starbucks&#39;)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/zl/bqtzmz3s0xl5_ddgbjsqxsww0000gn/T/ipykernel_35888/1589411627.py:1: PerformanceWarning: 
+your performance may suffer as PyTables will pickle object types that it cannot
+map directly to c-types [inferred_type-&gt;mixed-integer,key-&gt;block1_values] [items-&gt;Index([&#39;Unnamed: 0&#39;, &#39;tweet&#39;, &#39;conversation_id&#39;, &#39;date&#39;, &#39;hashtags&#39;,
+       &#39;inReplyToTweetId&#39;, &#39;reply_to&#39;, &#39;language&#39;, &#39;likes_count&#39;, &#39;media&#39;,
+       &#39;mentions&#39;, &#39;quoted_tweet&#39;, &#39;retweets_count&#39;, &#39;link&#39;,
+       &#39;user_status_count&#39;, &#39;location&#39;, &#39;name&#39;, &#39;description&#39;, &#39;verified&#39;,
+       &#39;url&#39;, &#39;user_id&#39;, &#39;username&#39;],
+      dtype=&#39;object&#39;)]
+
+  final.to_hdf(&#39;./../data/starbucks/data.h5&#39;, key=&#39;starbucks&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>final.shape
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(769439, 28)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./code/scrappers"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../../docs/topic_modelling/bertopic.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Topic Modeling: BERTopic</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="helpers.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Supporting functions</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Pushkar Patil<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
