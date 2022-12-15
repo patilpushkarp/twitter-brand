@@ -1,3 +1,7 @@
 jupyter-book
-matplotlib
-numpy
+# pandas
+# scikit-learn
+# bertopic
+# gensim
+# plotly
+# snscrape

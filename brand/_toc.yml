@@ -3,7 +3,10 @@
 
 format: jb-book
 root: intro
-parts:
-  - caption: Extras
-    chapters:
-    - file: references.md
+chapters:
+- file: docs/eda/eda.ipynb
+- file: docs/eda/preprocess.ipynb
+- file: docs/topic_modelling/lda.ipynb
+- file: docs/topic_modelling/bertopic.ipynb
+- file: code/scrappers/starbucks.ipynb
+- file: code/scrappers/helpers.md
