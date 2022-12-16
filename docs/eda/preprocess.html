@@ -52,7 +52,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Topic Modeling: Latent Dirichlet Allocation (LDA)" href="../topic_modelling/lda.html" />
+    <link rel="next" title="Topic Modeling" href="../topic_modelling/topic_modeling.html" />
     <link rel="prev" title="Exploratory Data Analysis" href="eda.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -120,6 +120,11 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="../topic_modelling/topic_modeling.html">
+   Topic Modeling
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="../topic_modelling/lda.html">
    Topic Modeling: Latent Dirichlet Allocation (LDA)
   </a>
@@ -130,13 +135,13 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../../code/scrappers/starbucks.html">
-   Scrapper for Starbucks
+  <a class="reference internal" href="../sentiment_analysis/sentiment_analysis.html">
+   Sentiment Analysis
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../../code/scrappers/helpers.html">
-   Supporting functions
+  <a class="reference internal" href="../../code/scrappers/starbucks.html">
+   Scrapper for Starbucks
   </a>
  </li>
 </ul>
@@ -349,9 +354,18 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="data-preprocessing">
 <h1>Data Preprocessing<a class="headerlink" href="#data-preprocessing" title="Permalink to this headline">#</a></h1>
+<p>Data preprocessing is an essential step in natural language processing (NLP), which involves cleaning, formatting, and transforming text data to make it suitable for use in NLP algorithms. Some common tasks that are performed as part of data preprocessing in NLP include:</p>
+<ul class="simple">
+<li><p>Tokenization: Tokenization is the process of breaking a piece of text into individual words or tokens. This is typically done by splitting the text on whitespace and punctuation, and then applying additional rules to identify and separate words that are joined together (such as contractions or compound nouns).</p></li>
+<li><p>Removing stop words: Stop words are common words that are typically filtered out of NLP algorithms because they do not add significant meaning to the text (such as “the,” “and,” or “but”). Removing stop words can help to reduce the size of the dataset and can make it easier to identify the most important words and phrases in the text.</p></li>
+<li><p>Stemming and lemmatization: Stemming and lemmatization are techniques for reducing inflected words (such as verbs in different tenses) to their base form. This can help to group together words that have the same meaning, which can improve the performance of NLP algorithms.</p></li>
+<li><p>Encoding the text: NLP algorithms typically require that text be encoded as numbers rather than as raw text. This can be done using techniques such as one-hot encoding, which creates a binary feature for each possible word in the vocabulary, or using word embeddings, which represent each word as a dense vector of numbers.</p></li>
+</ul>
+<p>Data preprocessing can help to improve the performance and accuracy of NLP algorithms by making the text data more suitable for analysis.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import re
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Load required packages
+import re
 import pandas as pd
 import gensim
 import spacy
@@ -367,17 +381,20 @@ tqdm.pandas()
 </div>
 </div>
 </div>
+<p>To reduce the time of processing, it will be prudent to analyze only a subset of tweets. Thus, for the further analysis 4000 tweets will be selected at random.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df = pd.read_hdf(&#39;./../../code/data/starbucks/data.h5&#39;, key=&#39;starbucks&#39;)
-df = df.iloc[:4000]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Load the data and select a subset of 4000 observations
+df = pd.read_hdf(&#39;./../../code/data/starbucks/data.h5&#39;, key=&#39;starbucks&#39;)
+df = df.sample(n=4000, random_state=42)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.shape
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Confirm the shape of the data
+df.shape
 </pre></div>
 </div>
 </div>
@@ -387,42 +404,53 @@ df = df.iloc[:4000]
 </div>
 </div>
 </div>
+<p>Based on the observation from the exploratory data analysis, the following prelimnary preprocessing steps will be performed:</p>
+<ol class="simple">
+<li><p>Remove the duplicate tweets</p></li>
+<li><p>Remove blank tweets data</p></li>
+<li><p>Select the subset of data which are posted in the English language</p></li>
+<li><p>Remove tweet data from official company handles.</p></li>
+</ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.drop_duplicates(&#39;tweet&#39;, inplace=True)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Remove duplicates
+df.drop_duplicates(&#39;tweet&#39;, inplace=True)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.dropna(subset=&#39;tweet&#39;, axis=0, inplace=True)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Remove blank tweets data
+df.dropna(subset=&#39;tweet&#39;, axis=0, inplace=True)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.shape
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(f&quot;After removing duplicate and blank tweets, {df.shape[0]} number of tweets still exist in the data.&quot;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3977, 28)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>After removing duplicate and blank tweets, 3658 number of tweets still exist in the data.
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df = df[df[&#39;language&#39;] == &#39;en&#39;]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Select observations posted in the English language
+df = df[df[&#39;language&#39;] == &#39;en&#39;]
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df = df[~df[&#39;username&#39;].isin([&#39;starbucks_es&#39;, &#39;starbucks_cstm&#39;, &#39;starbucks_j_cpg&#39;, &#39;starbuckspoho&#39;, 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Remove data from official company handles
+df = df[~df[&#39;username&#39;].isin([&#39;starbucks_es&#39;, &#39;starbucks_cstm&#39;, &#39;starbucks_j_cpg&#39;, &#39;starbuckspoho&#39;, 
                                 &#39;starbuckspoho&#39;, &#39;starbuckshomeme&#39;, &#39;starbucksperu&#39;])]
 </pre></div>
 </div>
@@ -430,16 +458,26 @@ df = df.iloc[:4000]
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.shape
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(f&quot;After removing duplicate, blank tweets, selecting subset based on language, removing data from official handles - {df.shape[0]} number of tweets remian in the data.&quot;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3313, 28)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>After removing duplicate, blank tweets, selecting subset based on language, removing data from official handles - 2770 number of tweets remian in the data.
 </pre></div>
 </div>
 </div>
 </div>
+<p>Before applying any algorithm to the data, it is necessary clean the data. The preprocessing steps that needs to be performed to make the tweet data usable are as follows:</p>
+<ol class="simple">
+<li><p>Convert the tweets to lower case</p></li>
+<li><p>Remove any tagged users</p></li>
+<li><p>Remove hashtags from the tweets</p></li>
+<li><p>Remove links from the tweets</p></li>
+<li><p>Remove any special characters and retain only alphanumeric data</p></li>
+<li><p>Perform lemmatization</p></li>
+<li><p>Remove the stopwords</p></li>
+</ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def preprocess_tweet(text):
@@ -467,9 +505,11 @@ df = df[df[&#39;preprocessed_tweet&#39;].map(bool)]
 </div>
 </div>
 </div>
+<p>Lemmatization is a technique used in natural language processing (NLP) to reduce inflected words to their base form, or lemma. This is done by identifying the part of speech and the context of the word, and then applying rules to map it to its lemma. For example, the lemma of the word “was” is “be,” and the lemma of the word “better” is “good.” Lemmatization is similar to stemming, which also reduces words to their base form, but lemmatization is more accurate because it considers the context of the word and produces a valid lemma, whereas stemming simply removes suffixes from the word, which may not result in a valid word. Lemmatization can be useful for grouping together words that have the same meaning, which can improve the performance of NLP algorithms.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def lemmatization(text):
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Perform lemmatization
+def lemmatization(text):
     &quot;&quot;&quot;Function to lemmatized tokenied sentence&quot;&quot;&quot;
     return &quot; &quot;.join([token.lemma_ if token.lemma_ != &#39;-PRON-&#39; else token.lower_ for token in nlp(text)])
 
@@ -479,12 +519,13 @@ df[&#39;preprocessed_tweet&#39;] = df[&#39;preprocessed_tweet&#39;].swifter.appl
 </div>
 <div class="cell_output docutils container">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "311c525813ef4be19f547e505df0b71b", "version_major": 2, "version_minor": 0}
+{"model_id": "151d289f4a63426885fb7e124b5cc60b", "version_major": 2, "version_minor": 0}
 </script></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def remove_stopwords(text):
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Remove stopwords
+def remove_stopwords(text):
     &quot;&quot;&quot;Method to remove stopwords from tweet text&quot;&quot;&quot;
 
     stopwords = STOPWORDS.union(set([&#39;starbucks&#39;, &#39;starbuck&#39;]))
@@ -499,12 +540,13 @@ df[&#39;preprocessed_tweet&#39;] = df[&#39;preprocessed_tweet&#39;].swifter.appl
 </div>
 <div class="cell_output docutils container">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "69b3d9474b144e358a3a106b1b03c8c4", "version_major": 2, "version_minor": 0}
+{"model_id": "b491514921d940a08feac0fee1aae1a1", "version_major": 2, "version_minor": 0}
 </script></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df[[&#39;tweet&#39;, &#39;preprocessed_tweet&#39;]]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Check the sample data after performing all the preprocessing steps
+df[[&#39;tweet&#39;, &#39;preprocessed_tweet&#39;]]
 </pre></div>
 </div>
 </div>
@@ -533,29 +575,29 @@ df[&#39;preprocessed_tweet&#39;] = df[&#39;preprocessed_tweet&#39;].swifter.appl
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>WHY Y’all lie &amp;amp; say Starbucks took EBT now...</td>
-      <td>y lie ebt pour shii</td>
+      <th>477970</th>
+      <td>So now you up 3am for work. These boomers 🤬 th...</td>
+      <td>3 a.m. work boomer wake early bullshxt stop bu...</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>Thanks A Latta Giveaway\n#WIN a $10 Starbucks ...</td>
-      <td>thank latta giveaway 10 amazon gc</td>
+      <th>362474</th>
+      <td>@ScottPalmer61 Yes. It’s a special Starbucks a...</td>
+      <td>yes special attachment</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>I used to hate Starbucks but now I love it so ...</td>
-      <td>use hate love want invent new frappuccino flavor</td>
+      <th>312427</th>
+      <td>I like the caramel frappe from Starbucks https...</td>
+      <td>like caramel frappe</td>
     </tr>
     <tr>
-      <th>3</th>
-      <td>philz needs to replace the starbucks on story ...</td>
-      <td>philz need replace story white fr</td>
+      <th>71318</th>
+      <td>Why is No Time To Die playing on repeat at #St...</td>
+      <td>time die playing repeat notice</td>
     </tr>
     <tr>
-      <th>4</th>
-      <td>@staceyabrams @BeeForGeorgia There were more p...</td>
-      <td>people grand opening</td>
+      <th>412468</th>
+      <td>https://t.co/tgR9Z5p8Ts | Criminals steal 200 ...</td>
+      <td>criminal steal 200 000 customer datum singapor...</td>
     </tr>
     <tr>
       <th>...</th>
@@ -563,45 +605,46 @@ df[&#39;preprocessed_tweet&#39;] = df[&#39;preprocessed_tweet&#39;].swifter.appl
       <td>...</td>
     </tr>
     <tr>
-      <th>3994</th>
-      <td>Hey @Starbucks I think I maybe the only one in...</td>
-      <td>hey think maybe cinnamon dolce syrup</td>
+      <th>38551</th>
+      <td>@ShevyShevrolet @HAWTToys @McFaul @elonmusk On...</td>
+      <td>month solve profs dilemma</td>
     </tr>
     <tr>
-      <th>3995</th>
-      <td>1h30 walk done !! now im resting in a mall wit...</td>
-      <td>1h30 walk rest mall ice americano fast 1h30 wa...</td>
+      <th>441914</th>
+      <td>If @Starbucks and @Delta are doing this I real...</td>
+      <td>hope</td>
     </tr>
     <tr>
-      <th>3996</th>
-      <td>@VP  you know I am working this corner to get ...</td>
-      <td>know work corner money coffee tuesday election...</td>
+      <th>744590</th>
+      <td>#Starbucks is taking its first steps into the ...</td>
+      <td>step partnership build blockchainbase loyalty ...</td>
     </tr>
     <tr>
-      <th>3997</th>
-      <td>Starting soon! Register here to hear from youn...</td>
-      <td>start soon register hear young striker unionis...</td>
+      <th>31846</th>
+      <td>@notany1youllkno @THETOMMYDREAMER @Starbucks @...</td>
+      <td>feel ok sure maga trump proud rock maga brother</td>
     </tr>
     <tr>
-      <th>3998</th>
-      <td>@Clodia55680147 you’re the one who literally a...</td>
-      <td>literally ask know american coffees taste like...</td>
+      <th>393878</th>
+      <td>Fidelity and Starbucks team up to help employe...</td>
+      <td>fidelity team help employee build saving</td>
     </tr>
   </tbody>
 </table>
-<p>3313 rows × 2 columns</p>
+<p>2770 rows × 2 columns</p>
 </div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.to_hdf(&#39;./../../code/data/starbucks/data.h5&#39;, key=&#39;preprocessed_starbucks&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Save the preprocessed data for further use
+df.to_hdf(&#39;./../../code/data/starbucks/data.h5&#39;, key=&#39;preprocessed_starbucks&#39;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/zl/bqtzmz3s0xl5_ddgbjsqxsww0000gn/T/ipykernel_80764/609922302.py:1: PerformanceWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/zl/bqtzmz3s0xl5_ddgbjsqxsww0000gn/T/ipykernel_83633/609922302.py:1: PerformanceWarning: 
 your performance may suffer as PyTables will pickle object types that it cannot
-map directly to c-types [inferred_type-&gt;mixed,key-&gt;block1_values] [items-&gt;Index([&#39;Unnamed: 0&#39;, &#39;tweet&#39;, &#39;conversation_id&#39;, &#39;date&#39;, &#39;hashtags&#39;,
+map directly to c-types [inferred_type-&gt;mixed-integer,key-&gt;block1_values] [items-&gt;Index([&#39;Unnamed: 0&#39;, &#39;tweet&#39;, &#39;conversation_id&#39;, &#39;date&#39;, &#39;hashtags&#39;,
        &#39;inReplyToTweetId&#39;, &#39;reply_to&#39;, &#39;language&#39;, &#39;likes_count&#39;, &#39;media&#39;,
        &#39;mentions&#39;, &#39;quoted_tweet&#39;, &#39;retweets_count&#39;, &#39;link&#39;,
        &#39;user_status_count&#39;, &#39;location&#39;, &#39;name&#39;, &#39;description&#39;, &#39;verified&#39;,
@@ -649,10 +692,10 @@ map directly to c-types [inferred_type-&gt;mixed,key-&gt;block1_values] [items-&
             <p class="prev-next-title">Exploratory Data Analysis</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../topic_modelling/lda.html" title="next page">
+    <a class='right-next' id="next-link" href="../topic_modelling/topic_modeling.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Topic Modeling: Latent Dirichlet Allocation (LDA)</p>
+        <p class="prev-next-title">Topic Modeling</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
