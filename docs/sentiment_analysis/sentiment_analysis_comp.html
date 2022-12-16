@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>&lt;no title&gt; &#8212; Understanding Brands</title>
+    <title>Sentiment Analysis &#8212; Understanding Brands</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -53,7 +53,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Scrapper for Starbucks" href="../../code/scrappers/starbucks.html" />
-    <link rel="prev" title="Sentiment Analysis" href="sentiment_analysis.html" />
+    <link rel="prev" title="Topic Modeling: Top2Vec" href="../topic_modelling/top2vec.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -108,7 +108,7 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../eda/eda.html">
    Exploratory Data Analysis
@@ -135,13 +135,23 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="sentiment_analysis.html">
+  <a class="reference internal" href="../topic_modelling/top2vec.html">
+   Topic Modeling: Top2Vec
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Sentiment Analysis
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../code/scrappers/starbucks.html">
    Scrapper for Starbucks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../team.html">
+   Project by
   </a>
  </li>
 </ul>
@@ -195,6 +205,35 @@ title="Toggle navigation"
         
     </div>
     <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/patilpushkarp/twitter-brand/master?urlpath=tree/docs/docs/sentiment_analysis/sentiment_analysis_comp.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
 <button onclick="toggleFullScreen()"
   class="headerbtn"
   data-toggle="tooltip"
@@ -320,7 +359,17 @@ title="Print to PDF"
         <i class="fas fa-list"></i> Contents
     </div>
     <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="simple visible nav section-nav flex-column">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#huggingface-transformers">
+   Huggingface transformers
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vader">
+   VADER
+  </a>
+ </li>
 </ul>
 
     </nav>
@@ -330,7 +379,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1><no title></h1>
+                <h1>Sentiment Analysis</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -339,7 +388,17 @@ title="Print to PDF"
                             <h2> Contents </h2>
                         </div>
                         <nav aria-label="Page">
-                            <ul class="simple visible nav section-nav flex-column">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#huggingface-transformers">
+   Huggingface transformers
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vader">
+   VADER
+  </a>
+ </li>
 </ul>
 
                         </nav>
@@ -350,7 +409,309 @@ title="Print to PDF"
                 
               <div>
                 
-  
+  <section class="tex2jax_ignore mathjax_ignore" id="sentiment-analysis">
+<h1>Sentiment Analysis<a class="headerlink" href="#sentiment-analysis" title="Permalink to this headline">#</a></h1>
+<p>Sentiment analysis is the process of using natural language processing (NLP) techniques to automatically identify and extract opinions, attitudes, and emotions from text data. This can be useful for a wide range of applications, such as analyzing customer feedback, tracking the sentiment of social media posts, or detecting the sentiment of news articles.</p>
+<p>Sentiment analysis typically involves applying machine learning algorithms to a large dataset of labeled text, where the labels indicate the sentiment of each text. The algorithm learns to identify the words and phrases that are most strongly associated with each sentiment, and it uses this information to make predictions about the sentiment of the new, unseen text. Common sentiments that are analyzed include positive, negative, and neutral, but more fine-grained sentiment analysis can also be performed, such as identifying the specific emotions that are expressed in the text (such as anger, fear, or joy).</p>
+<p>In general, sentiment analysis can be used to gauge the overall sentiment of a group of people towards a particular topic or product, or to identify patterns and trends in the sentiment of a particular group over time. It is a useful tool for businesses and organizations that want to understand how their customers or stakeholders feel about a particular issue or product.</p>
+<p>Various libraries in python enable the users to perform sentiment analysis. The two that will be used in this project is from VADER (Valence Aware Dictionary and sEntiment Reasoner) and huggingface transformers. It provides functions which can utilized deep learning based pre-trained models for sentiment analysis.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Load necessary packages
+import pandas as pd
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+from transformers import pipeline
+
+import plotly.express as px
+import plotly.io as pio
+svg_renderer = pio.renderers[&quot;svg&quot;]
+pio.renderers.default = &quot;svg&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Load the data
+df = pd.read_hdf(&#39;./../../code/data/starbucks/data.h5&#39;, key=&#39;preprocessed_starbucks&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Store only the required tweets
+data = df[&#39;preprocessed_tweet&#39;].values.tolist()
+</pre></div>
+</div>
+</div>
+</div>
+<section id="huggingface-transformers">
+<h2>Huggingface transformers<a class="headerlink" href="#huggingface-transformers" title="Permalink to this headline">#</a></h2>
+<p>Hugging Face is an open-source library that provides tools for natural language processing (NLP) tasks such as text classification, language translation, and sentiment analysis. It includes a large collection of pre-trained models that can be fine-tuned for specific tasks and datasets, as well as tools for building and training custom NLP models.</p>
+<p>The pre-trained embedding model that will be used for performing the sentiment analysis is “finiteautomata/bertweet-base-sentiment-analysis”. It is a roBERTa model trained on ~58M tweets and fine-tuned for sentiment analysis. Fine-tuning is the process of taking a pre-trained large language model (e.g. roBERTa in this case) and then tweaking it with additional training data to make it perform a second similar task (e.g. sentiment analysis).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Load the models
+sentiment_model = pipeline(model=&quot;finiteautomata/bertweet-base-sentiment-analysis&quot;)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "cf45b5cb99624663aded439494d8aacb", "version_major": 2, "version_minor": 0}
+</script><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>emoji is not installed, thus not converting emoticons or emojis into text. Install emoji: pip3 install emoji==0.6.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Get the sentiments
+sentiment_results = sentiment_model(data)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Frame the result
+tweets = df[&#39;tweet&#39;].values
+texts = df[&#39;preprocessed_tweet&#39;].values
+
+model_result = []
+for i in range(df.shape[0]):
+    series = [tweets[i], texts[i], sentiment_results[i][&#39;label&#39;], sentiment_results[i][&#39;score&#39;]]
+
+    model_result.append(series)
+
+model_result = pd.DataFrame(model_result, columns=[&#39;Tweet&#39;, &#39;Preprocessed tweet&#39;, &#39;Sentiment&#39;, &#39;Sentiment score&#39;])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Print the sample
+model_result.head()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Tweet</th>
+      <th>Preprocessed tweet</th>
+      <th>Sentiment</th>
+      <th>Sentiment score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>So now you up 3am for work. These boomers 🤬 th...</td>
+      <td>3 a.m. work boomer wake early bullshxt stop bu...</td>
+      <td>NEG</td>
+      <td>0.983999</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>@ScottPalmer61 Yes. It’s a special Starbucks a...</td>
+      <td>yes special attachment</td>
+      <td>POS</td>
+      <td>0.517730</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>I like the caramel frappe from Starbucks https...</td>
+      <td>like caramel frappe</td>
+      <td>NEU</td>
+      <td>0.815581</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Why is No Time To Die playing on repeat at #St...</td>
+      <td>time die playing repeat notice</td>
+      <td>NEG</td>
+      <td>0.753684</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>https://t.co/tgR9Z5p8Ts | Criminals steal 200 ...</td>
+      <td>criminal steal 200 000 customer datum singapor...</td>
+      <td>NEG</td>
+      <td>0.935092</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Plot the sentiment distribution
+fig = px.histogram(model_result, x=&#39;Sentiment&#39;, title=&quot;Distribution of Sentiments with Huggingface pre-trained transformer models&quot;, text_auto=True)
+fig.show()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/sentiment_analysis_comp_11_0.svg" src="../../_images/sentiment_analysis_comp_11_0.svg" /></div>
+</div>
+<p>The predicted that most of the tweets are neutral but there are more negative sentiments about the Starbucks than there are postive sentiments.</p>
+</section>
+<section id="vader">
+<h2>VADER<a class="headerlink" href="#vader" title="Permalink to this headline">#</a></h2>
+<p>The Valence Aware Dictionary and sEntiment Reasoner (VADER) is a lexicon and rule-based sentiment analysis tool that is specifically attuned to sentiments expressed in social media. It is designed to be sensitive to the nuances of sentiment expressed in text, including the intensity, the emotion, and the subjectivity of the sentiment.</p>
+<p>VADER uses a combination of machine learning techniques and a set of manually created rules to analyze the sentiment of text. It takes into account the context and the structure of the text, as well as the words and phrases used, to determine the overall sentiment. It also includes a set of rules for handling negation, booster words, and emphasis, which help it to better understand the sentiment being expressed.</p>
+<p>VADER has been widely used for sentiment analysis in various contexts, including social media analysis, market research, and customer service. It is known for its robust performance and ability to handle sarcasm and other forms of irony, making it a useful tool for understanding the sentiment expressed in social media and other forms of online communication.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Initialize the model
+sentiment_model = SentimentIntensityAnalyzer()
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.columns
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;Unnamed: 0&#39;, &#39;tweet&#39;, &#39;conversation_id&#39;, &#39;date&#39;, &#39;hashtags&#39;, &#39;id&#39;,
+       &#39;inReplyToTweetId&#39;, &#39;reply_to&#39;, &#39;language&#39;, &#39;likes_count&#39;, &#39;media&#39;,
+       &#39;mentions&#39;, &#39;quote_count&#39;, &#39;quoted_tweet&#39;, &#39;replies_count&#39;,
+       &#39;retweets_count&#39;, &#39;link&#39;, &#39;followers_count&#39;, &#39;following_count&#39;,
+       &#39;favourites_count&#39;, &#39;user_status_count&#39;, &#39;location&#39;, &#39;name&#39;,
+       &#39;description&#39;, &#39;verified&#39;, &#39;url&#39;, &#39;user_id&#39;, &#39;username&#39;,
+       &#39;preprocessed_tweet&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Get the sentiment and frame the result
+model_result = []
+for index, row in df.iterrows():
+    sentiment_result = sentiment_model.polarity_scores(row[&#39;preprocessed_tweet&#39;])
+    sentiment_scores = {
+        &#39;NEG&#39;: sentiment_result[&#39;neg&#39;],
+        &#39;POS&#39;: sentiment_result[&#39;pos&#39;],
+        &#39;NEU&#39;: sentiment_result[&#39;neu&#39;]
+    }
+    sentiment = max(sentiment_scores, key=sentiment_scores.get)
+    model_result.append([row[&#39;tweet&#39;], row[&#39;preprocessed_tweet&#39;], sentiment, sentiment_scores[sentiment]])
+
+model_result = pd.DataFrame(model_result, columns=[&#39;Tweet&#39;, &#39;Preprocessed tweet&#39;, &#39;Sentiment&#39;, &#39;Sentiment score&#39;])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>model_result.head()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Tweet</th>
+      <th>Preprocessed tweet</th>
+      <th>Sentiment</th>
+      <th>Sentiment score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>So now you up 3am for work. These boomers 🤬 th...</td>
+      <td>3 a.m. work boomer wake early bullshxt stop bu...</td>
+      <td>NEU</td>
+      <td>0.692</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>@ScottPalmer61 Yes. It’s a special Starbucks a...</td>
+      <td>yes special attachment</td>
+      <td>POS</td>
+      <td>1.000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>I like the caramel frappe from Starbucks https...</td>
+      <td>like caramel frappe</td>
+      <td>POS</td>
+      <td>0.556</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Why is No Time To Die playing on repeat at #St...</td>
+      <td>time die playing repeat notice</td>
+      <td>NEG</td>
+      <td>0.448</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>https://t.co/tgR9Z5p8Ts | Criminals steal 200 ...</td>
+      <td>criminal steal 200 000 customer datum singapor...</td>
+      <td>NEU</td>
+      <td>0.515</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Plot the sentiment distribution
+fig = px.histogram(model_result, x=&#39;Sentiment&#39;, title=&quot;Distribution of Sentiments with VADER&quot;, text_auto=True)
+fig.show()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/sentiment_analysis_comp_19_0.svg" src="../../_images/sentiment_analysis_comp_19_0.svg" /></div>
+</div>
+<p>Even the VADER model does not agrees with the huggingface transformers. Most of the tweets have neutral sentiments but there are more positive sentiments than there are negative sentiments about the brand.</p>
+</section>
+</section>
+
     <script type="text/x-thebe-config">
     {
         requestKernel: true,
@@ -378,11 +739,11 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="sentiment_analysis.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="../topic_modelling/top2vec.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Sentiment Analysis</p>
+            <p class="prev-next-title">Topic Modeling: Top2Vec</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="../../code/scrappers/starbucks.html" title="next page">

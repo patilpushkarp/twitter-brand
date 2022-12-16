@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Exploratory Data Analysis &#8212; Understanding Brands</title>
+    <title>Topic Modeling: Top2Vec &#8212; Understanding Brands</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -52,8 +52,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Data Preprocessing" href="preprocess.html" />
-    <link rel="prev" title="Social Media Analytics" href="../../intro.html" />
+    <link rel="next" title="Sentiment Analysis" href="../sentiment_analysis/sentiment_analysis_comp.html" />
+    <link rel="prev" title="Topic Modeling: BERTopic" href="bertopic.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -109,33 +109,33 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../eda/eda.html">
    Exploratory Data Analysis
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="preprocess.html">
+  <a class="reference internal" href="../eda/preprocess.html">
    Data Preprocessing
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../topic_modelling/topic_modeling.html">
+  <a class="reference internal" href="topic_modeling.html">
    Topic Modeling
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../topic_modelling/lda.html">
+  <a class="reference internal" href="lda.html">
    Topic Modeling: Latent Dirichlet Allocation (LDA)
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../topic_modelling/bertopic.html">
+  <a class="reference internal" href="bertopic.html">
    Topic Modeling: BERTopic
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../topic_modelling/top2vec.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Topic Modeling: Top2Vec
   </a>
  </li>
@@ -213,7 +213,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://mybinder.org/v2/gh/patilpushkarp/twitter-brand/master?urlpath=tree/docs/docs/eda/eda.ipynb"
+        <a href="https://mybinder.org/v2/gh/patilpushkarp/twitter-brand/master?urlpath=tree/docs/docs/topic_modelling/top2vec.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -273,7 +273,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/patilpushkarp/twitter-brand/issues/new?title=Issue%20on%20page%20%2Fdocs/eda/eda.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/patilpushkarp/twitter-brand/issues/new?title=Issue%20on%20page%20%2Fdocs/topic_modelling/top2vec.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -301,7 +301,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../../_sources/docs/eda/eda.ipynb"
+        <a href="../../_sources/docs/topic_modelling/top2vec.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -350,7 +350,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Exploratory Data Analysis</h1>
+                <h1>Topic Modeling: Top2Vec</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -362,14 +362,29 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="exploratory-data-analysis">
-<h1>Exploratory Data Analysis<a class="headerlink" href="#exploratory-data-analysis" title="Permalink to this headline">#</a></h1>
-<p>Exploratory data analysis (EDA) is a process of systematically examining and analyzing data in order to summarize its main characteristics, to find patterns and relationships within the data, and to identify any anomalies or irregularities. It is an iterative process that involves visualizing the data, applying statistical techniques, and using other tools and methods to gain insights and to discover new patterns and relationships in the data. EDA is typically used at the beginning of a data analysis project, before more formal methods are applied, in order to gain a better understanding of the data and to identify any important features or trends that may not be immediately apparent. It can help researchers and data scientists to form hypotheses and to generate ideas for further analysis.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="topic-modeling-top2vec">
+<h1>Topic Modeling: Top2Vec<a class="headerlink" href="#topic-modeling-top2vec" title="Permalink to this headline">#</a></h1>
+<p>Top2Vec is a technique for representing text documents as numerical vectors in a high-dimensional space, with the goal of capturing the main topics or themes present in the document. It is based on the idea of creating a dense vector representation of a document by aggregating the vectors of its individual words, which are themselves obtained through a process called word embedding.</p>
+<p>Top2Vec combines the idea of word embedding with that of topic modeling, a technique for identifying the main themes or topics present in a collection of documents. It does this by training a model to predict the distribution of topics in a document given its word embeddings, and then using this trained model to generate a dense vector representation of the document based on the predicted topic distribution.</p>
+<p>Top2Vec has been used in a number of natural language processing tasks, including document classification, text summarization, and content recommendation. It has been shown to be effective in capturing the main themes or topics present in a document and representing them in a numerical form that can be used as input to other machine learning models.</p>
+<p>At a high level, the algorithm performs the following steps to discover topics in a list of documents.</p>
+<ul class="simple">
+<li><p>Generate embedding vectors for documents and words.</p></li>
+<li><p>Perform dimensionality reduction on the vectors using an algorithm such as UMAP.</p></li>
+<li><p>Cluster the vectors using a clustering algorithm such as HDBSCAN.</p></li>
+<li><p>Assign topics to each cluster.</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Load the libraries
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Load required packages
+import numpy as np
 import pandas as pd
+from top2vec import Top2Vec
+
 import plotly.express as px
+import plotly.io as pio
+svg_renderer = pio.renderers[&quot;svg&quot;]
+pio.renderers.default = &quot;svg&quot;
 </pre></div>
 </div>
 </div>
@@ -377,133 +392,71 @@ import plotly.express as px
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Load the data
-df = pd.read_hdf(&#39;./../../code/data/starbucks/data.h5&#39;, key=&#39;starbucks&#39;)
+df = pd.read_hdf(&#39;./../../code/data/starbucks/data.h5&#39;, key=&#39;preprocessed_starbucks&#39;)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Get the shape of the data
-df.shape
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Store only the required tweets
+docs = df[&#39;preprocessed_tweet&#39;].values.tolist()
+</pre></div>
+</div>
+</div>
+</div>
+<p>Since Top2vec is capable of utilizing deep learning based custom embeddings, the embeddings that will be used in the project is “all-MiniLM-L6-v2”. It is an all-round model tuned for many use-cases which are trained on a large and diverse dataset of over 1 billion training pairs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Fit the model
+model = Top2Vec(docs, ngram_vocab=True, embedding_model=&#39;all-MiniLM-L6-v2&#39;, workers=8)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(769439, 28)
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-12-16 23:05:11,427 - top2vec - INFO - Pre-processing documents for training
+/Users/pushkar/miniforge3/envs/project/lib/python3.8/site-packages/sklearn/utils/deprecation.py:87: FutureWarning:
+
+Function get_feature_names is deprecated; get_feature_names is deprecated in 1.0 and will be removed in 1.2. Please use get_feature_names_out instead.
+
+2022-12-16 23:05:11,508 - top2vec - INFO - Downloading all-MiniLM-L6-v2 model
+2022-12-16 23:05:11,977 - top2vec - INFO - Creating joint document/word embedding
+2022-12-16 23:06:02,758 - top2vec - INFO - Creating lower dimension embedding of documents
+2022-12-16 23:06:15,063 - top2vec - INFO - Finding dense areas of documents
+2022-12-16 23:06:15,157 - top2vec - INFO - Finding topics
 </pre></div>
 </div>
 </div>
 </div>
-<p>There are 769439 rows and 28 columns in the data i.e. the data set contains information about 769439 tweets. The tweets thus scraped have other information associated with them such as the time on which they are posted, the conversation identifier that they are part of, the username of the user who posted the tweet, the number of likes of the tweet, number of quotes of tweet, etc.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Get the number of duplicate tweets
-df[df[&#39;tweet&#39;].duplicated()].shape
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Get the number of topics
+model.get_num_topics()
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(76652, 28)
-</pre></div>
-</div>
-</div>
-</div>
-<p>There are 76652 duplicate observations in the data. It is better to remove them as duplicates do not provide any extra information. This duplication of data happens due to one tweet getting multiple identifiers. For some unknown reasons, Twitter can change the identifiers of the tweets.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Get the number of blank tweets
-df[&#39;tweet&#39;].isna().sum()
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4
-</pre></div>
-</div>
-</div>
-</div>
-<p>There are 4 observations having no tweets at all. This can happen due to inefficiency during the scraping of the data.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Get the number of unique usernames
-df[&#39;username&#39;].nunique()
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>524472
-</pre></div>
-</div>
-</div>
-</div>
-<p>There are 524472 unique usernames who tweeted about Starbucks in the chosen period.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Get the number of unique languages
-df[&#39;language&#39;].nunique()
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>65
-</pre></div>
-</div>
-</div>
-</div>
-<p>The data contains tweets in 65 different languages. For our analysis, it is better to consider tweets posted in the English language only.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Plot the distribution of top 10 languages
-lang_df = pd.DataFrame(df[&#39;language&#39;].value_counts()).reset_index().iloc[:10]
-lang_df.columns = [&#39;language&#39;, &#39;num_tweets&#39;]
-fig = px.bar(lang_df, x=&#39;language&#39;, y=&#39;num_tweets&#39;, log_y=True, title=&quot;Distribution of languages in tweets&quot;)
-fig.update_xaxes(title=&quot;Languages&quot;)
-fig.update_yaxes(title=&quot;Number of tweets&quot;)
-fig.show()
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Get the data having &quot;starbucks&quot; keyword in the usernames
-starbucks_df = df.dropna(subset=&#39;username&#39;, axis=0)
-starbucks_df = starbucks_df[starbucks_df[&#39;username&#39;].str.contains(&#39;starbucks&#39;)]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Print the username with &quot;starbucks&quot; substring
-print(set(starbucks_df[&#39;username&#39;].values))
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;starbucks__01&#39;, &#39;starbuckslay&#39;, &#39;matchstarbucks&#39;, &#39;starbucksssftw&#39;, &#39;starbucks4649&#39;, &#39;kfcmcdstarbucks&#39;, &#39;SCTstarbucks&#39;, &#39;starbucksperu&#39;, &#39;starbucks_es&#39;, &#39;starbucksteve9&#39;, &#39;Dutastarbucks&#39;, &#39;starbucksfan32&#39;, &#39;starbuckshomeme&#39;, &#39;starbucks9515&#39;, &#39;starbucksgirl51&#39;, &#39;marocstarbucks&#39;, &#39;oownerstarbucks&#39;, &#39;investarbucks&#39;, &#39;annannstarbucks&#39;, &#39;starbucks_j_cpg&#39;, &#39;emo_starbucks&#39;, &#39;starbuckspoho&#39;, &#39;starbucksilivri&#39;, &#39;everystarbucks_&#39;, &#39;starbucks_1996&#39;, &#39;jemaatstarbucks&#39;, &#39;pinkstarbucks_&#39;, &#39;starbucksph&#39;, &#39;wearegstarbucks&#39;, &#39;starbucksfloozy&#39;, &#39;starbucks1940&#39;, &#39;starbucks_item&#39;, &#39;starbucks_cstm&#39;, &#39;jiyasstarbucks&#39;, &#39;starbuckslabor&#39;}
-</pre></div>
-</div>
-</div>
-</div>
-<p>There are certain accounts that belong to the Starbucks company itself. The tweets from these accounts can not be used to analyze the perception of people about the brand. Hence, tweets from the official accounts of the company will be removed.
-The following are the accounts whose tweets need to be removed from the data set:</p>
-<ol class="simple">
-<li><p>starbucks_es - Official handle of Starbucks spain</p></li>
-<li><p>starbucks_cstm - Bot for Starbucks collectibles</p></li>
-<li><p>starbucks_j_cpg - Starbucks official account for CPG in Japan</p></li>
-<li><p>starbuckspoho - Official handle of Starbucks Port Hope</p></li>
-<li><p>starbucksph - Official handle of Starbucks Philippines</p></li>
-<li><p>starbuckshomeme - Official handle of Starbucks At Home Arabia</p></li>
-<li><p>starbucksperu - Official handle of Starbucks Peru</p></li>
-</ol>
-<p>The descriptive statistics for the number of quotes, followers of the users, followings of the users and number of favorites is as follows:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.describe()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Frame the results
+topic_sizes, topic_nums = model.get_topic_sizes()
+topic_words = model.topic_words
+model_results = pd.DataFrame({
+    &#39;Topic_number&#39;: topic_nums,
+    &#39;Topic_count&#39;: topic_sizes,
+})
+
+model_results[&#39;Topic_words&#39;] = None
+for i, row in model_results.iterrows():
+    words_list = &quot;, &quot;.join(topic_words[i])
+    model_results.at[i, &#39;Topic_words&#39;] = words_list
+
+model_results
 </pre></div>
 </div>
 </div>
@@ -526,91 +479,247 @@ The following are the accounts whose tweets need to be removed from the data set
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>id</th>
-      <th>quote_count</th>
-      <th>replies_count</th>
-      <th>followers_count</th>
-      <th>following_count</th>
-      <th>favourites_count</th>
+      <th>Topic_number</th>
+      <th>Topic_count</th>
+      <th>Topic_words</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>count</th>
-      <td>7.694150e+05</td>
-      <td>769414.000000</td>
-      <td>769417.000000</td>
-      <td>7.694170e+05</td>
-      <td>7.694170e+05</td>
-      <td>7.694170e+05</td>
+      <th>0</th>
+      <td>0</td>
+      <td>2593</td>
+      <td>customer, holiday drink, barista yell, work, d...</td>
     </tr>
     <tr>
-      <th>mean</th>
-      <td>1.576728e+18</td>
-      <td>0.350595</td>
-      <td>0.730379</td>
-      <td>6.338931e+04</td>
-      <td>1.630781e+03</td>
-      <td>2.770260e+04</td>
-    </tr>
-    <tr>
-      <th>std</th>
-      <td>7.165636e+15</td>
-      <td>21.384164</td>
-      <td>14.810353</td>
-      <td>8.181532e+05</td>
-      <td>9.815163e+03</td>
-      <td>5.833423e+04</td>
-    </tr>
-    <tr>
-      <th>min</th>
-      <td>1.152794e+18</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000e+00</td>
-      <td>0.000000e+00</td>
-      <td>0.000000e+00</td>
-    </tr>
-    <tr>
-      <th>25%</th>
-      <td>1.570202e+18</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>8.700000e+01</td>
-      <td>1.530000e+02</td>
-      <td>1.317000e+03</td>
-    </tr>
-    <tr>
-      <th>50%</th>
-      <td>1.576381e+18</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>3.310000e+02</td>
-      <td>4.160000e+02</td>
-      <td>7.984000e+03</td>
-    </tr>
-    <tr>
-      <th>75%</th>
-      <td>1.582854e+18</td>
-      <td>0.000000</td>
-      <td>1.000000</td>
-      <td>1.153000e+03</td>
-      <td>1.067000e+03</td>
-      <td>2.862300e+04</td>
-    </tr>
-    <tr>
-      <th>max</th>
-      <td>1.589007e+18</td>
-      <td>7320.000000</td>
-      <td>5934.000000</td>
-      <td>6.044489e+07</td>
-      <td>1.655061e+06</td>
-      <td>3.133858e+06</td>
+      <th>1</th>
+      <td>1</td>
+      <td>177</td>
+      <td>good, right, lol, new, look, want, customer, l...</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Get the sample documents for each topic
+topics_df = []
+
+for topic_num in range(model.get_num_topics()):
+    tmp = pd.DataFrame(model.search_documents_by_topic(0, num_docs=10)).T
+    tmp.columns = [&#39;Tweet text&#39;, &#39;Topic confidence&#39;, &#39;index&#39;]
+    tmp[&#39;Topic number&#39;] = topic_num
+    topics_df.append(tmp)
+
+topics_df = pd.concat(topics_df, axis=0)
+topics_df
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Tweet text</th>
+      <th>Topic confidence</th>
+      <th>index</th>
+      <th>Topic number</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>use reward yesterday grande shake brown sugar ...</td>
+      <td>0.611833</td>
+      <td>713</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>today isfor home buy drink onthego local chain...</td>
+      <td>0.599895</td>
+      <td>1142</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ugh doordash 8 drink literally 17 lmfaooo send...</td>
+      <td>0.580481</td>
+      <td>2557</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>work tomorrow afford usual ill coffeei need ma...</td>
+      <td>0.574859</td>
+      <td>1806</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>y emmet barista yell taste yess s start play p...</td>
+      <td>0.570993</td>
+      <td>2380</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>buy morning lollll</td>
+      <td>0.566577</td>
+      <td>100</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>funny cos pay start coffeeif know d think</td>
+      <td>0.566567</td>
+      <td>1956</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>omw buy little drink</td>
+      <td>0.562152</td>
+      <td>2350</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>y bad business barista yell good song email se...</td>
+      <td>0.560717</td>
+      <td>834</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>englewood ohio grande hot caramel mochiotto mo...</td>
+      <td>0.560117</td>
+      <td>935</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>use reward yesterday grande shake brown sugar ...</td>
+      <td>0.611833</td>
+      <td>713</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>today isfor home buy drink onthego local chain...</td>
+      <td>0.599895</td>
+      <td>1142</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ugh doordash 8 drink literally 17 lmfaooo send...</td>
+      <td>0.580481</td>
+      <td>2557</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>work tomorrow afford usual ill coffeei need ma...</td>
+      <td>0.574859</td>
+      <td>1806</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>y emmet barista yell taste yess s start play p...</td>
+      <td>0.570993</td>
+      <td>2380</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>buy morning lollll</td>
+      <td>0.566577</td>
+      <td>100</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>funny cos pay start coffeeif know d think</td>
+      <td>0.566567</td>
+      <td>1956</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>omw buy little drink</td>
+      <td>0.562152</td>
+      <td>2350</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>y bad business barista yell good song email se...</td>
+      <td>0.560717</td>
+      <td>834</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>englewood ohio grande hot caramel mochiotto mo...</td>
+      <td>0.560117</td>
+      <td>935</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig = px.bar(model_results, x=&#39;Topic_number&#39;, y=&#39;Topic_count&#39;, title=&quot;Distribution of topics&quot;, text_auto=True)
+fig.show()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+</pre></div>
+</div>
+<img alt="../../_images/top2vec_10_1.svg" src="../../_images/top2vec_10_1.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for topic_num in range(model.get_num_topics()):
+    model.generate_topic_wordcloud(topic_num)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/top2vec_11_0.png" src="../../_images/top2vec_11_0.png" />
+<img alt="../../_images/top2vec_11_1.png" src="../../_images/top2vec_11_1.png" />
+</div>
+</div>
+<p>From the above wordclouds, it can be inferred that:</p>
+<ul class="simple">
+<li><p>The first topic is mostly related to special drinks that are offered by Starbucks.</p></li>
+<li><p>The second topic is related to the appreciation of the company’s products.</p></li>
+</ul>
 </section>
 
     <script type="text/x-thebe-config">
@@ -626,7 +735,7 @@ The following are the accounts whose tweets need to be removed from the data set
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./docs/eda"
+            path: "./docs/topic_modelling"
         },
         predefinedOutput: true
     }
@@ -640,17 +749,17 @@ The following are the accounts whose tweets need to be removed from the data set
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="../../intro.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="bertopic.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Social Media Analytics</p>
+            <p class="prev-next-title">Topic Modeling: BERTopic</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="preprocess.html" title="next page">
+    <a class='right-next' id="next-link" href="../sentiment_analysis/sentiment_analysis_comp.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Data Preprocessing</p>
+        <p class="prev-next-title">Sentiment Analysis</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

@@ -135,13 +135,23 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../sentiment_analysis/sentiment_analysis.html">
+  <a class="reference internal" href="../topic_modelling/top2vec.html">
+   Topic Modeling: Top2Vec
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../sentiment_analysis/sentiment_analysis_comp.html">
    Sentiment Analysis
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../code/scrappers/starbucks.html">
    Scrapper for Starbucks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../team.html">
+   Project by
   </a>
  </li>
 </ul>
@@ -519,7 +529,7 @@ df[&#39;preprocessed_tweet&#39;] = df[&#39;preprocessed_tweet&#39;].swifter.appl
 </div>
 <div class="cell_output docutils container">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "151d289f4a63426885fb7e124b5cc60b", "version_major": 2, "version_minor": 0}
+{"model_id": "9f9d5d86c6e043468df6b25ae197f550", "version_major": 2, "version_minor": 0}
 </script></div>
 </div>
 <div class="cell docutils container">
@@ -528,7 +538,7 @@ df[&#39;preprocessed_tweet&#39;] = df[&#39;preprocessed_tweet&#39;].swifter.appl
 def remove_stopwords(text):
     &quot;&quot;&quot;Method to remove stopwords from tweet text&quot;&quot;&quot;
 
-    stopwords = STOPWORDS.union(set([&#39;starbucks&#39;, &#39;starbuck&#39;]))
+    stopwords = STOPWORDS.union(set([&#39;starbucks&#39;, &#39;starbuck&#39;, &#39;coffee&#39;, &#39;latte&#39;]))
 
     text_tokens = word_tokenize(text)
     tokens_without_sw = [word for word in text_tokens if not word in stopwords]
@@ -540,7 +550,7 @@ df[&#39;preprocessed_tweet&#39;] = df[&#39;preprocessed_tweet&#39;].swifter.appl
 </div>
 <div class="cell_output docutils container">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "b491514921d940a08feac0fee1aae1a1", "version_major": 2, "version_minor": 0}
+{"model_id": "4dcafd3825bb41e8848a545b08f6931f", "version_major": 2, "version_minor": 0}
 </script></div>
 </div>
 <div class="cell docutils container">
@@ -642,7 +652,7 @@ df.to_hdf(&#39;./../../code/data/starbucks/data.h5&#39;, key=&#39;preprocessed_s
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/zl/bqtzmz3s0xl5_ddgbjsqxsww0000gn/T/ipykernel_83633/609922302.py:1: PerformanceWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/zl/bqtzmz3s0xl5_ddgbjsqxsww0000gn/T/ipykernel_5134/584498752.py:2: PerformanceWarning: 
 your performance may suffer as PyTables will pickle object types that it cannot
 map directly to c-types [inferred_type-&gt;mixed-integer,key-&gt;block1_values] [items-&gt;Index([&#39;Unnamed: 0&#39;, &#39;tweet&#39;, &#39;conversation_id&#39;, &#39;date&#39;, &#39;hashtags&#39;,
        &#39;inReplyToTweetId&#39;, &#39;reply_to&#39;, &#39;language&#39;, &#39;likes_count&#39;, &#39;media&#39;,
