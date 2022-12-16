@@ -31,4 +31,4 @@ The data is scraped from Twitter using python and its packages. It was scrapped 
 
 #### Research Ideas
 
-The data can be used to analyze the perception of people towards the brand Starbucks. It can also be used to check how and what people talk about the brand. It is also beneficial to understand the audience for various segments of the brand Starbucks. 
+The data can be used to analyze the perception of people towards the brand Starbucks. It can also be used to check how and what people talk about the brand. It can also be used to gauge the sentiments about the brand. It is also beneficial to understand the audience for various segments of the brand Starbucks. 
