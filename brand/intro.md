@@ -11,13 +11,17 @@ Brands can leverage social media in a number of ways to achieve their business g
 4. Improving customer service: Social media platforms can be used to improve customer service by providing a quick and convenient way for customers to get in touch with the brand. This can help reduce response times and improve the overall customer experience.
 Overall, leveraging social media effectively can help brands build relationships with their customers, increase brand awareness, drive website traffic and sales, and improve customer service.
 
+The brand chosen for this project is - **STARBUCKS**.
+
 ## About
 
 ### About the company - [Starbucks](https://www.starbucks.com/about-us/)
 
-Starbucks Corporation is an American multinational chain of coffeehouses and roastery reserves headquartered in Seattle, Washington. It is the world's largest coffeehouse chain. In addition to drinks and food, many stores carry Starbucks' official merchandise, such as mugs, tumblers, scoops, and coffee presses. There are also several select "Starbucks Evenings" locations that offer beer, wine, and appetizers. Starbucks-brand coffee, ice cream, and bottled cold coffee drinks are sold at grocery stores in the United States and other countries.
-Starbucks was founded in 1971 by Jerry Baldwin, Zev Siegl, and Gordon Bowker at Seattle's Pike Place Market. During the early 1980s, they sold the company to Howard Schultz who – after a business trip to Milan, Italy – decided to convert the coffee bean store into a coffee shop serving espresso-based drinks. As of November 2021, the company had 33,833 stores in 80 countries, 15,444 of which were located in the United States. Out of Starbucks' U.S.-based stores, over 8,900 are company-operated, while the remainder are licensed.
-The rise of the second wave of coffee culture is generally attributed to Starbucks, which introduced a wider variety of coffee experiences. Starbucks serves hot and cold drinks, whole-bean coffee, micro-ground instant coffee, espresso, caffe latte, full and loose-leaf teas, juices, Frappuccino beverages, pastries, and snacks. Some offerings are seasonal, or specific to the locality of the store.
+Starbucks is a global coffee company and coffeehouse chain that was founded in Seattle, Washington in 1971. The company's mission is to "inspire and nurture the human spirit – one person, one cup, and one neighborhood at a time." Starbucks is known for its wide variety of coffee and tea drinks, as well as its selection of pastries and snacks. In addition to its retail locations, Starbucks sells a range of coffee beans, coffee makers, and other products through its online store and through partnerships with other retailers.
+
+Starbucks has a strong focus on sustainability, and it works to source its coffee beans ethically and responsibly. The company has established long-term relationships with farmers and cooperatives around the world, and it works with them to support sustainable farming practices and to improve the quality of their coffee. Starbucks also has a number of programs in place to reduce its environmental impacts, such as recycling, water conservation, and waste reduction.
+
+In addition to its commitment to sustainability, Starbucks is also known for its focus on providing a high-quality customer experience. The company trains its baristas to be knowledgeable about its products and to provide excellent service to its customers. Starbucks also offers a rewards program for frequent customers, and it has a strong presence on social media, where it engages with its customers and shares news and information about its products and initiatives.
 
 ### About the data
 

@@ -6,7 +6,9 @@ root: intro
 chapters:
 - file: docs/eda/eda.ipynb
 - file: docs/eda/preprocess.ipynb
+- file: docs/topic_modelling/topic_modeling.md
 - file: docs/topic_modelling/lda.ipynb
 - file: docs/topic_modelling/bertopic.ipynb
+- file: docs/sentiment_analysis/sentiment_analysis.md
+- file: docs/sentiment_analysis/sentiment_analysis_comp.ipynb
 - file: code/scrappers/starbucks.ipynb
-- file: code/scrappers/helpers.md
